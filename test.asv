@@ -1,0 +1,10 @@
+function test(cluster1)
+ch=
+for o=1:ch
+       o
+       cluster1(o)
+      if(nodeArch.dead(cluster1(o) )==1)
+        cluster1(o) =[];
+        ch=size(cluster,2);
+      end
+   end

@@ -1,0 +1,48 @@
+function d=gasearch(tab,xy)
+for i=1:size(tab,2)
+dex(i) = tab(i);
+end
+%xy = rand(10,2)*100;
+nPoints = size(xy,1);
+a = meshgrid(1:nPoints);
+dmat = reshape(sqrt(sum((xy(a,:)-xy(a',:)).^2,2)),nPoints,nPoints);
+dmat(size(dmat,1)+1,1)=0;
+dmat(1,size(dmat,2)+1)=0;
+dmat(size(dmat,1),2:size(dmat,2)-1)=9999;
+dmat(2:size(dmat,1)-1,size(dmat,2))=9999;
+xy(size(xy,1)+1,1)=0;
+xy(size(xy,1),2)=0;
+userConfig = struct('xy',xy,'dmat',dmat,'showResult',0);
+resultStruct = tsp_ga(userConfig);
+bestPath = resultStruct.optRoute;
+fkPoint  = size(xy,1);
+indx = find(bestPath==fkPoint);
+i = indx+1;
+j=1;
+ m = rem(i,size(bestPath,2));
+ if(m==0)
+      m=size(bestPath,2); 
+  end
+while(indx ~= m)
+ 
+ 
+mat(j) = bestPath(m);
+j=j+1;
+i=i+1;
+ m = rem(i,size(bestPath,2));
+  if(m==0)
+      m=size(bestPath,2); 
+  end
+end
+if (mat(1)==1)
+   mat = fliplr(mat);
+end
+rte = mat([1:size(mat,2) 1]);
+
+%set(gca,'XLim',[0 numIter+1],'YLim',[0 1.1*max([1 distHistory])]);
+xy(:,1)
+xy(:,2)
+               plot(xy(rte,1),xy(rte,2),'r.-');
+              %  title(sprintf('Total Distance = %1.4f, Iteration = %d',5,5));
+                drawnow;
+
